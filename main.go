@@ -1,5 +1,10 @@
 package main
 
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
 // album represents data about a record album.
 type album struct {
 	ID     string  `json:"id"`
@@ -13,4 +18,14 @@ var albums = []album{
 	{ID: "2", Title: "Jeru", Artist: "Gerry Mulligan", Price: 17.99},
 	{ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
 	{ID: "4", Title: "Kind of Blue", Artist: "Miles Davis", Price: 49.99},
+}
+
+func getAlbums(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, albums)
+}
+
+func main() {
+	router := gin.Default()
+	router.GET("/albums", getAlbums)
+	router.Run("localhost:8080")
 }
